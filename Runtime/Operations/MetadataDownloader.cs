@@ -40,9 +40,10 @@ namespace ReadyPlayerMe.AvatarLoader
             {
                 throw new InvalidDataException($"Expected cast {typeof(string)}");
             }
-            if (Application.internetReachability == NetworkReachability.NotReachable)
+            if (context.AvatarCachingEnabled && File.Exists(context.AvatarUri.LocalMetadataPath) && !context.SaveInProjectFolder)
             {
                 context.Metadata = AvatarMetadata.LoadFromFile(context.AvatarUri.LocalMetadataPath);
+                context.IsUpdateRequired = false;
             }
             else
             {
